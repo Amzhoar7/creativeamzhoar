@@ -102,7 +102,61 @@
             color: var(--accent);
         }
 
-        /* HERO - SIN FONDO NEGRO */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 8px;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px;
+            transition: all 0.35s ease;
+            box-shadow: 0 0 8px var(--accent);
+        }
+
+        /* MOBILE MENU - CORREGIDO */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 45px;
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .mobile-menu a {
+            font-size: 2.1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--accent);
+            text-shadow: 0 0 25px var(--accent);
+        }
+
+        /* HERO - IMAGEN COMPLETA */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -115,21 +169,32 @@
             overflow: hidden;
         }
 
-        /* Imagen del Hero más grande */
         .jarvis-icon {
-            width: 340px;
-            height: 340px;
+            width: 420px;
+            max-width: 90vw;
+            height: auto;
             margin-bottom: 50px;
-            filter: 
-                drop-shadow(0 0 70px var(--accent)) 
-                drop-shadow(0 0 120px var(--accent)) 
-                drop-shadow(0 0 180px rgba(157, 78, 221, 0.7));
-            transition: all 0.8s ease;
+            transition: all 0.9s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 2;
+            filter: 
+                drop-shadow(0 0 80px var(--accent)) 
+                drop-shadow(0 0 140px var(--accent)) 
+                drop-shadow(0 0 200px rgba(157, 78, 221, 0.75));
         }
 
         .jarvis-icon:hover {
-            transform: scale(1.08) rotate(3deg);
+            transform: scale(1.12) rotate(4deg);
+            filter: 
+                drop-shadow(0 0 100px var(--accent)) 
+                drop-shadow(0 0 180px var(--accent)) 
+                drop-shadow(0 0 260px rgba(157, 78, 221, 0.9));
+        }
+
+        .jarvis-icon img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;        /* ← Muestra la imagen completa */
+            display: block;
         }
 
         .title {
@@ -142,7 +207,6 @@
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 70px rgba(0, 168, 255, 0.95);
             animation: glow 3s infinite alternate;
-            z-index: 2;
         }
 
         .main-message {
@@ -198,7 +262,7 @@
             50% { opacity: 1; }
         }
 
-        /* SERVICIOS */
+        /* SECCIONES */
         .section {
             padding: 140px 5% 120px;
             max-width: 1250px;
@@ -315,68 +379,10 @@
             50% { box-shadow: 0 0 60px #25D366; }
         }
 
-        /* MODAL EXIT INTENT */
-        .exit-modal {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(5, 5, 5, 0.95);
-            backdrop-filter: blur(20px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-        }
-
-        .modal-content {
-            background: rgba(20, 20, 20, 0.98);
-            border: 1px solid rgba(0, 168, 255, 0.4);
-            border-radius: 24px;
-            padding: 55px 45px;
-            max-width: 440px;
-            text-align: center;
-            box-shadow: 0 0 90px rgba(0, 168, 255, 0.4);
-        }
-
-        .modal-title {
-            font-size: 1.85rem;
-            color: #ff4d4d;
-            margin-bottom: 18px;
-        }
-
-        .modal-subtitle {
-            font-size: 1.18rem;
-            color: var(--text-secondary);
-            line-height: 1.65;
-            margin-bottom: 35px;
-        }
-
-        /* SCROLL CTA */
-        .scroll-cta {
-            position: fixed;
-            bottom: 130px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(10, 10, 10, 0.92);
-            padding: 14px 32px;
-            border-radius: 50px;
-            border: 1px solid rgba(0, 168, 255, 0.3);
-            display: none;
-            align-items: center;
-            gap: 15px;
-            z-index: 999;
-            box-shadow: 0 0 35px rgba(0, 168, 255, 0.25);
-        }
-
+        /* Responsive */
         @media (max-width: 900px) {
             .nav-links { display: none; }
             .hamburger { display: flex; }
-        }
-
-        @media (min-width: 901px) {
-            .nav-links {
-                margin-left: auto;
-            }
         }
     </style>
 </head>
@@ -385,7 +391,7 @@
     <canvas id="bg"></canvas>
 
     <nav>
-        <a href="#" class="nav-logo">AMZHOAR</a>
+        <a href="index.html" class="nav-logo">AMZHOAR</a>
         <div class="nav-links">
             <a href="index.html">Inicio</a>
             <a href="index.html#about">Sobre Mí</a>
@@ -399,14 +405,14 @@
     </nav>
 
     <div class="mobile-menu" id="mobileMenu">
-        <a href="#">Inicio</a>
-        <a href="#">Sobre Mí</a>
-        <a href="#">Áreas</a>
+        <a href="index.html">Inicio</a>
+            <a href="index.html#about">Sobre Mí</a>
+            <a href="index.html#areas">Áreas</a>
     </div>
 
     <section class="hero">
         <div class="jarvis-icon">
-            <img src="1776837064993.webp" width="340" alt="Diseño & Branding" onerror="this.style.display='none'">
+            <img src="1776837064993.webp" alt="Amzhoar Logo" loading="eager">
         </div>
         <h1 class="title">DISEÑO & BRANDING</h1>
         <p class="main-message">No es diseño… es percepción de valor.</p>
@@ -466,18 +472,6 @@
            class="whatsapp-btn" target="_blank">
             <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="40" alt="WhatsApp">
         </a>
-    </div>
-
-    <!-- EXIT INTENT MODAL -->
-    <div class="exit-modal" id="exitModal">
-        <div class="modal-content">
-            <h2 class="modal-title">Espera… esto no es para todos.</h2>
-            <p class="modal-subtitle">Si realmente quieres que tu marca destaque y se perciba en otro nivel, este es el siguiente paso.</p>
-            <a href="https://wa.me/525557904251?text=Hola,%20estuve%20viendo%20tu%20p%C3%A1gina%20y%20me%20interesa%20llevar%20mi%20marca%20a%20otro%20nivel.%20%C2%BFC%C3%B3mo%20empezamos%3F" 
-               class="cta-button" target="_blank" style="margin-top:20px; display:inline-block;">
-                Hablar por WhatsApp
-            </a>
-        </div>
     </div>
 
     <script>
@@ -540,37 +534,34 @@
         }
         animateParticles();
 
-        // Mensajes dinámicos WhatsApp
-        const texts = ["Respondo en minutos", "Diagnóstico sin costo", "Pocos espacios disponibles", "Atención directa"];
-        let index = 0;
-        const dynamicText = document.getElementById('dynamicText');
-
-        setInterval(() => {
-            index = (index + 1) % texts.length;
-            dynamicText.style.opacity = 0;
-            setTimeout(() => {
-                dynamicText.textContent = texts[index];
-                dynamicText.style.opacity = 1;
-            }, 400);
-        }, 4500);
-
-        // Exit Intent Modal
-        const exitModal = document.getElementById('exitModal');
-        let modalShown = false;
-
-        document.addEventListener('mouseout', (e) => {
-            if (!modalShown && e.clientY < 20) {
-                exitModal.style.display = 'flex';
-                modalShown = true;
-            }
-        });
-
-        // Menú móvil
+        // MENÚ HAMBURGUESA CORREGIDO
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
 
         hamburger.addEventListener('click', () => {
-            mobileMenu.classList.toggle('active');
+            const isActive = mobileMenu.classList.toggle('active');
+            
+            const spans = hamburger.querySelectorAll('span');
+            if (isActive) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+
+        // Cerrar menú al hacer clic en enlaces
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                const spans = hamburger.querySelectorAll('span');
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            });
         });
     </script>
 </body>
