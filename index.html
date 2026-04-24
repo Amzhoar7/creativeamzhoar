@@ -19,6 +19,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
+            user-select: none;
             font-family: 'Space Grotesk', sans-serif;
             background: var(--bg);
             color: var(--text);
@@ -420,6 +421,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <canvas id="bg"></canvas>
@@ -722,6 +724,12 @@
                 spans[2].style.transform = 'none';
             });
         });
+        document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+});
+document.querySelectorAll('img').forEach(img => {
+    img.setAttribute('draggable', 'false');
+});
     </script>
 </body>
 </html>
