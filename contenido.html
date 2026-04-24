@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contenido Digital - Amzhoar Creative</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --accent: #00A8FF;
+            --accent-purple: #9d4edd;
+            --text: #ffffff;
+            --text-secondary: #b3b3b3;
+            --whatsapp: #25D366;
+            --whatsapp-glow: #22c55e;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            cursor: none;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        #bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -2;
+            background: radial-gradient(circle at 50% 20%, rgba(0, 168, 255, 0.12), transparent 70%);
+        }
+
+        /* CURSOR NEON */
+        .cursor {
+            position: fixed;
+            width: 14px;
+            height: 14px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 20px var(--accent), 0 0 40px var(--accent);
+        }
+
+        .cursor-trail {
+            position: fixed;
+            width: 32px;
+            height: 32px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.35;
+            filter: blur(6px);
+        }
+
+        /* NAVEGACIÓN */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 10, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 168, 255, 0.15);
+        }
+
+        .nav-logo {
+            font-size: 1.65rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 8px var(--accent);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(15px);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .mobile-menu a {
+            font-size: 2rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--accent);
+            text-shadow: 0 0 20px var(--accent);
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0 5%;
+        }
+
+        .jarvis-icon {
+            width: 300px;
+            height: 300px;
+            margin-bottom: 40px;
+            filter: drop-shadow(0 0 60px var(--accent)) 
+                    drop-shadow(0 0 110px var(--accent)) 
+                    drop-shadow(0 0 170px rgba(157, 78, 221, 0.7));
+            transition: all 0.8s ease;
+            z-index: 2;
+        }
+
+        .title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: clamp(3.2rem, 8vw, 5.8rem);
+            font-weight: 700;
+            letter-spacing: 14px;
+            background: linear-gradient(90deg, #00A8FF, #c026d3, #00A8FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 50px rgba(0, 168, 255, 0.9);
+            animation: glow 3s infinite alternate;
+        }
+
+        .subtitle {
+            font-size: clamp(1.4rem, 4vw, 1.8rem);
+            color: var(--text-secondary);
+            margin-top: 20px;
+            max-width: 700px;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px #00A8FF; }
+            to   { text-shadow: 0 0 70px #c026d3; }
+        }
+
+        /* SECCIONES */
+        .section {
+            padding: 130px 5% 100px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        h2 {
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            background: linear-gradient(90deg, var(--accent), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 60px;
+        }
+
+        .section p {
+            font-size: 1.3rem;
+            line-height: 1.9;
+            max-width: 920px;
+            margin: 0 auto;
+            color: var(--text-secondary);
+        }
+
+        /* ==================== SERVICIOS - CORREGIDO PARA 1000PX ==================== */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .service-card {
+            background: rgba(10, 10, 10, 0.85);
+            border: 1px solid rgba(0, 168, 255, 0.25);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(0, 168, 255, 0.08);
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(0, 168, 255, 0.25);
+            border-color: var(--accent);
+        }
+
+        .service-card img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .service-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .service-card .content {
+            padding: 30px 25px;
+            text-align: left;
+        }
+
+        .service-card h3 {
+            font-size: 1.65rem;
+            margin-bottom: 14px;
+            background: linear-gradient(90deg, var(--accent), #c026d3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .service-card p {
+            font-size: 1.15rem;
+            line-height: 1.75;
+            color: var(--text-secondary);
+        }
+
+        /* === IMÁGENES DE 1000PX EN PANTALLAS GRANDES === */
+        @media (min-width: 1400px) {
+            .services-grid {
+                grid-template-columns: repeat(auto-fit, minmax(1050px, 1fr));
+                gap: 60px;
+            }
+
+            .service-card {
+                max-width: 1050px;
+                margin: 0 auto;
+            }
+
+            .service-card img {
+                width: 1000px !important;
+                height: auto !important;
+                max-height: 620px;           /* Ajustado para que quepan bien las imágenes individuales */
+                margin: 0 auto;
+                display: block;
+                object-fit: cover;           /* o 'contain' si prefieres ver toda la imagen sin recorte */
+                border-radius: 20px 20px 0 0;
+            }
+
+            .service-card .content {
+                padding: 35px 40px;
+            }
+        }
+
+        /* WHATSAPP FLOTANTE */
+        .whatsapp-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .whatsapp-text {
+            background: rgba(10, 10, 10, 0.95);
+            color: #fff;
+            font-size: 13.5px;
+            font-weight: 500;
+            padding: 11px 18px;
+            border-radius: 12px;
+            margin-bottom: 14px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(37, 211, 102, 0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            line-height: 1.45;
+            max-width: 230px;
+        }
+
+        .whatsapp-container:hover .whatsapp-text {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .whatsapp-btn {
+            width: 68px;
+            height: 68px;
+            background: var(--whatsapp);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 25px var(--whatsapp-glow), 0 10px 30px rgba(37, 211, 102, 0.35);
+            text-decoration: none;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: whatsappPulse 3.8s infinite ease-in-out;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 45px var(--whatsapp-glow), 0 15px 40px rgba(37, 211, 102, 0.5);
+        }
+
+        @keyframes whatsappPulse {
+            0%, 100% { box-shadow: 0 0 25px var(--whatsapp-glow), 0 10px 30px rgba(37, 211, 102, 0.35); }
+            50% { box-shadow: 0 0 38px var(--whatsapp-glow), 0 15px 45px rgba(37, 211, 102, 0.55); }
+        }
+
+        .whatsapp-btn img {
+            width: 40px;
+            filter: drop-shadow(0 0 8px rgba(255,255,255,0.7));
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .service-card img { height: 260px; }
+        }
+
+        @media (max-width: 768px) {
+            .whatsapp-container { bottom: 20px; right: 20px; }
+            .whatsapp-btn { width: 62px; height: 62px; }
+            .whatsapp-btn img { width: 36px; }
+            .whatsapp-text { font-size: 12.5px; padding: 9px 15px; max-width: 210px; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg"></canvas>
+
+    <!-- MENÚ -->
+    <nav>
+        <a href="index.html" class="nav-logo">AMZHOAR</a>
+        <div class="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="index.html#about">Sobre Mí</a>
+            <a href="index.html#areas">Áreas</a>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Inicio</a>
+        <a href="index.html#about">Sobre Mí</a>
+        <a href="index.html#areas">Áreas</a>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="jarvis-icon">
+            <img src="frasco.webp" width="340" alt="Contenido Digital">
+        </div>
+        <h1 class="title">CONTENIDO DIGITAL</h1>
+        <p class="subtitle">El contenido no es entretenimiento… es ventaja.</p>
+    </section>
+
+    <!-- CONTENIDO -->
+    <section class="section">
+        <h2>Lo que te ofrezco</h2>
+        <p>
+            No vendo archivos. Vendo acceso.<br><br>
+            Cursos que aceleran tu mente • Películas que no están en plataformas • 
+            Música que define tu identidad • Libros con ideas peligrosas • 
+            Bancos de imágenes de alto impacto.<br><br>
+            Aquí no entras a consumir… entras a adelantarte.
+        </p>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section class="section">
+        <h2>Acceso a otro nivel</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <img src="1776903949471.webp" alt="Cursos" loading="lazy">
+                <div class="content">
+                    <h3>Cursos</h3>
+                    <p>No es educación tradicional… es ventaja competitiva.<br><br>Aprende habilidades que otros tardan años en descubrir, en días.</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <img src="1776903758165.webp" alt="Películas" loading="lazy">
+                <div class="content">
+                    <h3>Películas</h3>
+                    <p>Contenido que no siempre encontrarás en streaming.<br><br>Cine que impacta, incomoda y despierta.</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <img src="1776903134721.webp" alt="Música" loading="lazy">
+                <div class="content">
+                    <h3>Música</h3>
+                    <p>No escuchas música… defines quién eres.<br><br>Desde clásicos hasta rarezas que pocos conocen.</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <img src="1776903028660.webp" alt="Libros" loading="lazy">
+                <div class="content">
+                    <h3>Libros</h3>
+                    <p>Ideas peligrosas para mentes inquietas.<br><br>Conocimiento que cambia perspectivas… y resultados.</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <img src="escen.webp" alt="Banco de imágenes" loading="lazy">
+                <div class="content">
+                    <h3>Banco de imágenes</h3>
+                    <p>Visuales de alto impacto para proyectos que necesitan destacar.<br><br>Contenido que no parece descargado… parece creado por profesionales.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACCESO PRIVADO -->
+    <section class="section">
+        <h2>🔐 Acceso Privado</h2>
+        <p>
+            No todo está visible.<br><br>
+            Existen colecciones, packs exclusivos y contenido bajo pedido que no aparece públicamente.<br><br>
+            Si sabes lo que buscas… puedes pedirlo.
+        </p>
+    </section>
+
+    <!-- IDENTIDAD -->
+    <section class="section">
+        <h2>Identidad</h2>
+        <p style="font-size:1.5rem; line-height:2;">
+            No consumo contenido…<br>
+            <strong style="color:#00A8FF;">controlo lo que otros aún no descubren.</strong>
+        </p>
+    </section>
+
+    <!-- WHATSAPP FLOTANTE -->
+    <div class="whatsapp-container">
+        <div class="whatsapp-text">
+            Acceso reservado para quienes buscan más.<br>
+            Solicítalo por WhatsApp.
+        </div>
+        
+        <a href="https://wa.me/525557904251?text=Hola%2C%20quiero%20acceder%20a%20tu%20contenido%20exclusivo%20(cursos%2C%20pel%C3%ADculas%2C%20m%C3%BAsica%2C%20libros%20y%20banco%20de%20im%C3%A1genes).%20Busco%20algo%20diferente%2C%20de%20alto%20nivel.%20%C2%BFC%C3%B3mo%20puedo%20comprar%3F" 
+           class="whatsapp-btn" 
+           target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+        </a>
+    </div>
+
+    <script>
+        // === CURSOR NEON + TRAIL ===
+        const cursor = document.createElement('div');
+        const trail = document.createElement('div');
+        cursor.className = 'cursor';
+        trail.className = 'cursor-trail';
+        document.body.appendChild(cursor);
+        document.body.appendChild(trail);
+
+        let mouseX = 0, mouseY = 0, trailX = 0, trailY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+        });
+
+        function animateTrail() {
+            trailX += (mouseX - trailX) * 0.13;
+            trailY += (mouseY - trailY) * 0.13;
+            trail.style.left = trailX + 'px';
+            trail.style.top = trailY + 'px';
+            requestAnimationFrame(animateTrail);
+        }
+        animateTrail();
+
+        // === CANVAS DE FONDO ===
+        const bgCanvas = document.getElementById("bg");
+        const bgCtx = bgCanvas.getContext("2d");
+
+        function resizeBgCanvas() {
+            bgCanvas.width = window.innerWidth;
+            bgCanvas.height = window.innerHeight;
+        }
+        resizeBgCanvas();
+        window.addEventListener("resize", resizeBgCanvas);
+
+        let fallingParticles = [];
+        for (let i = 0; i < 70; i++) {
+            fallingParticles.push({
+                x: Math.random() * bgCanvas.width,
+                y: Math.random() * bgCanvas.height,
+                size: Math.random() * 2.5 + 0.6,
+                speed: Math.random() * 0.35 + 0.1
+            });
+        }
+
+        let floatingParticles = [];
+        for (let i = 0; i < 45; i++) {
+            floatingParticles.push({
+                x: Math.random() * bgCanvas.width,
+                y: Math.random() * bgCanvas.height,
+                size: Math.random() * 3 + 1.2,
+                speedX: (Math.random() - 0.5) * 0.4,
+                speedY: (Math.random() - 0.5) * 0.4,
+                opacity: Math.random() * 0.25 + 0.15
+            });
+        }
+
+        let connectionPoints = [];
+        for (let i = 0; i < 50; i++) {
+            connectionPoints.push({
+                x: Math.random() * bgCanvas.width,
+                y: Math.random() * bgCanvas.height,
+                speedX: (Math.random() - 0.5) * 0.6,
+                speedY: (Math.random() - 0.5) * 0.6
+            });
+        }
+
+        function animateParticles() {
+            bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+            fallingParticles.forEach(p => {
+                bgCtx.fillStyle = "rgba(0, 168, 255, 0.22)";
+                bgCtx.fillRect(p.x, p.y, p.size, p.size);
+                p.y += p.speed;
+                if (p.y > bgCanvas.height) p.y = -10;
+            });
+
+            floatingParticles.forEach(p => {
+                bgCtx.fillStyle = `rgba(0, 168, 255, ${p.opacity})`;
+                bgCtx.beginPath();
+                bgCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                bgCtx.fill();
+
+                p.x += p.speedX;
+                p.y += p.speedY;
+
+                if (p.x < 0 || p.x > bgCanvas.width) p.speedX *= -1;
+                if (p.y < 0 || p.y > bgCanvas.height) p.speedY *= -1;
+
+                p.speedX += (Math.random() - 0.5) * 0.02;
+                p.speedY += (Math.random() - 0.5) * 0.02;
+            });
+
+            connectionPoints.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+
+                if (p.x < 0 || p.x > bgCanvas.width) p.speedX *= -1;
+                if (p.y < 0 || p.y > bgCanvas.height) p.speedY *= -1;
+
+                const distToCursor = Math.hypot(p.x - mouseX, p.y - mouseY);
+
+                if (distToCursor < 280) {
+                    bgCtx.beginPath();
+                    bgCtx.strokeStyle = `rgba(0, 168, 255, ${0.45 - distToCursor / 700})`;
+                    bgCtx.lineWidth = 1.1;
+                    bgCtx.moveTo(p.x, p.y);
+                    bgCtx.lineTo(mouseX, mouseY);
+                    bgCtx.stroke();
+                }
+            });
+
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // === MENÚ MÓVIL ===
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            const spans = hamburger.querySelectorAll('span');
+            if (mobileMenu.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                const spans = hamburger.querySelectorAll('span');
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseño & Branding - Amzhoar Creative</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --accent: #00A8FF;
+            --accent-purple: #9d4edd;
+            --text: #ffffff;
+            --text-secondary: #b3b3b3;
+            --card-bg: rgba(20, 20, 20, 0.75);
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            cursor: none;
+            line-height: 1.6;
+        }
+
+        #bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -2;
+            background: radial-gradient(circle at 50% 20%, rgba(0, 168, 255, 0.15), transparent 70%);
+        }
+
+        /* CURSOR NEON */
+        .cursor {
+            position: fixed;
+            width: 14px;
+            height: 14px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 20px var(--accent), 0 0 40px var(--accent);
+        }
+
+        .cursor-trail {
+            position: fixed;
+            width: 32px;
+            height: 32px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.35;
+            filter: blur(6px);
+        }
+
+        /* NAVEGACIÓN */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 22px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 168, 255, 0.15);
+        }
+
+        .nav-logo {
+            font-size: 1.7rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* HERO - SIN FONDO NEGRO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding: 0 5%;
+            overflow: hidden;
+        }
+
+        /* Imagen del Hero más grande */
+        .jarvis-icon {
+            width: 340px;
+            height: 340px;
+            margin-bottom: 50px;
+            filter: 
+                drop-shadow(0 0 70px var(--accent)) 
+                drop-shadow(0 0 120px var(--accent)) 
+                drop-shadow(0 0 180px rgba(157, 78, 221, 0.7));
+            transition: all 0.8s ease;
+            z-index: 2;
+        }
+
+        .jarvis-icon:hover {
+            transform: scale(1.08) rotate(3deg);
+        }
+
+        .title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: clamp(3.5rem, 9vw, 6.5rem);
+            font-weight: 700;
+            letter-spacing: 14px;
+            background: linear-gradient(90deg, #00A8FF, #c026d3, #00A8FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 70px rgba(0, 168, 255, 0.95);
+            animation: glow 3s infinite alternate;
+            z-index: 2;
+        }
+
+        .main-message {
+            font-size: clamp(1.65rem, 5vw, 2.45rem);
+            font-weight: 600;
+            margin: 25px 0 18px;
+        }
+
+        .subtitle {
+            font-size: clamp(1.2rem, 4vw, 1.55rem);
+            color: var(--text-secondary);
+            max-width: 720px;
+            margin: 0 auto 55px;
+            line-height: 1.6;
+        }
+
+        .cta-small {
+            font-size: 0.95rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+            animation: pulseText 3s infinite;
+        }
+
+        .cta-button {
+            background: linear-gradient(90deg, #00A8FF, #9d4edd);
+            color: white;
+            padding: 18px 55px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 45px rgba(0, 168, 255, 0.6);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.07) translateY(-4px);
+            box-shadow: 0 0 70px rgba(157, 78, 221, 0.8);
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 30px #00A8FF; }
+            to   { text-shadow: 0 0 85px #c026d3; }
+        }
+
+        @keyframes pulseText {
+            0%, 100% { opacity: 0.75; }
+            50% { opacity: 1; }
+        }
+
+        /* SERVICIOS */
+        .section {
+            padding: 140px 5% 120px;
+            max-width: 1250px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: clamp(2.6rem, 6vw, 3.8rem);
+            background: linear-gradient(90deg, var(--accent), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 80px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 55px;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 168, 255, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            backdrop-filter: blur(12px);
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px);
+            border-color: rgba(157, 78, 221, 0.5);
+            box-shadow: 0 25px 60px rgba(0, 168, 255, 0.2);
+        }
+
+        .service-img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+        }
+
+        .service-card:hover .service-img {
+            transform: scale(1.06);
+        }
+
+        .service-content {
+            padding: 40px;
+        }
+
+        .service-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.95rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .service-desc {
+            font-size: 1.12rem;
+            line-height: 1.78;
+            color: var(--text-secondary);
+        }
+
+        /* WHATSAPP */
+        .whatsapp-container {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            z-index: 1000;
+            gap: 12px;
+        }
+
+        .whatsapp-text {
+            background: rgba(10, 10, 10, 0.95);
+            color: var(--text-secondary);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 0.97rem;
+            box-shadow: 0 0 25px rgba(0,0,0,0.6);
+            animation: floatText 4s infinite ease-in-out;
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+            box-shadow: 0 0 40px #25D366;
+            transition: all 0.4s ease;
+            animation: pulse 2.8s infinite;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 65px #25D366;
+        }
+
+        @keyframes floatText {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 35px #25D366; }
+            50% { box-shadow: 0 0 60px #25D366; }
+        }
+
+        /* MODAL EXIT INTENT */
+        .exit-modal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(20px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .modal-content {
+            background: rgba(20, 20, 20, 0.98);
+            border: 1px solid rgba(0, 168, 255, 0.4);
+            border-radius: 24px;
+            padding: 55px 45px;
+            max-width: 440px;
+            text-align: center;
+            box-shadow: 0 0 90px rgba(0, 168, 255, 0.4);
+        }
+
+        .modal-title {
+            font-size: 1.85rem;
+            color: #ff4d4d;
+            margin-bottom: 18px;
+        }
+
+        .modal-subtitle {
+            font-size: 1.18rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+            margin-bottom: 35px;
+        }
+
+        /* SCROLL CTA */
+        .scroll-cta {
+            position: fixed;
+            bottom: 130px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 10, 10, 0.92);
+            padding: 14px 32px;
+            border-radius: 50px;
+            border: 1px solid rgba(0, 168, 255, 0.3);
+            display: none;
+            align-items: center;
+            gap: 15px;
+            z-index: 999;
+            box-shadow: 0 0 35px rgba(0, 168, 255, 0.25);
+        }
+
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+        }
+
+        @media (min-width: 901px) {
+            .nav-links {
+                margin-left: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg"></canvas>
+
+    <nav>
+        <a href="#" class="nav-logo">AMZHOAR</a>
+        <div class="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="index.html#about">Sobre Mí</a>
+            <a href="index.html#areas">Áreas</a>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#">Inicio</a>
+        <a href="#">Sobre Mí</a>
+        <a href="#">Áreas</a>
+    </div>
+
+    <section class="hero">
+        <div class="jarvis-icon">
+            <img src="1776837064993.webp" width="340" alt="Diseño & Branding" onerror="this.style.display='none'">
+        </div>
+        <h1 class="title">DISEÑO & BRANDING</h1>
+        <p class="main-message">No es diseño… es percepción de valor.</p>
+        <p class="subtitle">Si tu marca se ve común, se percibe barata.<br>Yo hago que se vea imposible de ignorar.</p>
+        
+        <div>
+            <span class="cta-small">EL ACCESO NO ES PÚBLICO • SOLICÍTALO AHORA</span><br><br>
+            <a href="https://wa.me/525557904251?text=Hola,%20quiero%20llevar%20mi%20marca%20a%20otro%20nivel.%20%C2%BFC%C3%B3mo%20podemos%20trabajar%3F" 
+               class="cta-button" target="_blank">
+                Acceder por WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Lo que ofrezco</h2>
+        
+        <div class="services-grid">
+            <div class="service-card">
+                <img src="1776832414348.webp" alt="Desarrollo Web" class="service-img">
+                <div class="service-content">
+                    <h3 class="service-title">Desarrollo Web & UX/UI</h3>
+                    <p class="service-desc">No se trata de tener una página… se trata de que convierta. Diseño interfaces que capturan atención y generan acción.</p>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <img src="1776832491110.webp" alt="Identidad Corporativa" class="service-img">
+                <div class="service-content">
+                    <h3 class="service-title">Identidad Corporativa</h3>
+                    <p class="service-desc">Una marca fuerte no se improvisa. Construyo identidades que transmiten autoridad desde el primer vistazo.</p>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <img src="1776832556937.webp" alt="Branding Estratégico" class="service-img">
+                <div class="service-content">
+                    <h3 class="service-title">Branding Estratégico</h3>
+                    <p class="service-desc">No es contenido… es posicionamiento. Diseño para que tu marca se quede en la mente.</p>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <img src="1776832338622.webp" alt="Marca Personal" class="service-img">
+                <div class="service-content">
+                    <h3 class="service-title">Marca Personal & Imagen</h3>
+                    <p class="service-desc">Tu imagen habla antes que tú. Te ayudo a proyectar presencia y valor real.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHATSAPP -->
+    <div class="whatsapp-container">
+        <div class="whatsapp-text" id="dynamicText">Respondo en minutos</div>
+        <a href="https://wa.me/525557904251?text=Hola,%20quiero%20informaci%C3%B3n%20sobre%20branding%20y%20dise%C3%B1o.%20Busco%20algo%20de%20alto%20nivel." 
+           class="whatsapp-btn" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="40" alt="WhatsApp">
+        </a>
+    </div>
+
+    <!-- EXIT INTENT MODAL -->
+    <div class="exit-modal" id="exitModal">
+        <div class="modal-content">
+            <h2 class="modal-title">Espera… esto no es para todos.</h2>
+            <p class="modal-subtitle">Si realmente quieres que tu marca destaque y se perciba en otro nivel, este es el siguiente paso.</p>
+            <a href="https://wa.me/525557904251?text=Hola,%20estuve%20viendo%20tu%20p%C3%A1gina%20y%20me%20interesa%20llevar%20mi%20marca%20a%20otro%20nivel.%20%C2%BFC%C3%B3mo%20empezamos%3F" 
+               class="cta-button" target="_blank" style="margin-top:20px; display:inline-block;">
+                Hablar por WhatsApp
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Cursor Neon + Trail
+        const cursor = document.createElement('div');
+        const trail = document.createElement('div');
+        cursor.className = 'cursor';
+        trail.className = 'cursor-trail';
+        document.body.appendChild(cursor);
+        document.body.appendChild(trail);
+
+        let mouseX = 0, mouseY = 0, trailX = 0, trailY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+        });
+
+        function animateTrail() {
+            trailX += (mouseX - trailX) * 0.13;
+            trailY += (mouseY - trailY) * 0.13;
+            trail.style.left = trailX + 'px';
+            trail.style.top = trailY + 'px';
+            requestAnimationFrame(animateTrail);
+        }
+        animateTrail();
+
+        // Canvas Partículas
+        const bgCanvas = document.getElementById("bg");
+        const bgCtx = bgCanvas.getContext("2d");
+
+        function resizeCanvas() {
+            bgCanvas.width = window.innerWidth;
+            bgCanvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener("resize", resizeCanvas);
+
+        let particles = [];
+        for (let i = 0; i < 80; i++) {
+            particles.push({
+                x: Math.random() * bgCanvas.width,
+                y: Math.random() * bgCanvas.height,
+                size: Math.random() * 2.5 + 0.8,
+                speed: Math.random() * 0.4 + 0.15
+            });
+        }
+
+        function animateParticles() {
+            bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+            particles.forEach(p => {
+                bgCtx.fillStyle = "rgba(0, 168, 255, 0.25)";
+                bgCtx.fillRect(p.x, p.y, p.size, p.size);
+                p.y += p.speed;
+                if (p.y > bgCanvas.height) p.y = -10;
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // Mensajes dinámicos WhatsApp
+        const texts = ["Respondo en minutos", "Diagnóstico sin costo", "Pocos espacios disponibles", "Atención directa"];
+        let index = 0;
+        const dynamicText = document.getElementById('dynamicText');
+
+        setInterval(() => {
+            index = (index + 1) % texts.length;
+            dynamicText.style.opacity = 0;
+            setTimeout(() => {
+                dynamicText.textContent = texts[index];
+                dynamicText.style.opacity = 1;
+            }, 400);
+        }, 4500);
+
+        // Exit Intent Modal
+        const exitModal = document.getElementById('exitModal');
+        let modalShown = false;
+
+        document.addEventListener('mouseout', (e) => {
+            if (!modalShown && e.clientY < 20) {
+                exitModal.style.display = 'flex';
+                modalShown = true;
+            }
+        });
+
+        // Menú móvil
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

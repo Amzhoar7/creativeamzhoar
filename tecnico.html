@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicio Técnico - Amzhoar Creative</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --accent: #00A8FF;
+            --accent-purple: #9d4edd;
+            --text: #ffffff;
+            --text-secondary: #b3b3b3;
+            --gold: #ffd700;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        #bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -2;
+            background: radial-gradient(circle at 50% 20%, rgba(0, 168, 255, 0.22), transparent 80%);
+        }
+
+        /* CURSOR NEON */
+        .cursor {
+            position: fixed;
+            width: 14px;
+            height: 14px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 20px var(--accent), 0 0 40px var(--accent);
+        }
+
+        .cursor-trail {
+            position: fixed;
+            width: 32px;
+            height: 32px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.35;
+            filter: blur(6px);
+        }
+
+        /* MENÚ */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 10, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 168, 255, 0.15);
+        }
+
+        .nav-logo {
+            font-size: 1.65rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 8px var(--accent);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(15px);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .mobile-menu a {
+            font-size: 2rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--accent);
+            text-shadow: 0 0 20px var(--accent);
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0 5%;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(rgba(10,10,10,0.22), rgba(10,10,10,0.32));
+            z-index: -1;
+        }
+
+        .jarvis-icon {
+            width: 340px;
+            max-width: 92vw;
+            height: auto;
+            margin-bottom: 45px;
+            filter: drop-shadow(0 0 90px #ffd700) 
+                    drop-shadow(0 0 140px #00A8FF);
+            transition: all 0.7s ease;
+            z-index: 2;
+        }
+
+        .jarvis-icon:hover {
+            transform: scale(1.08);
+        }
+
+        .jarvis-icon img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        .title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: clamp(3.3rem, 9.5vw, 6.5rem);
+            font-weight: 700;
+            letter-spacing: 18px;
+            background: linear-gradient(90deg, #ffd700, #ffaa00, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 80px #ffd700;
+            animation: glow 3s infinite alternate;
+            z-index: 2;
+        }
+
+        .subtitle {
+            font-size: clamp(1.4rem, 5vw, 2.1rem);
+            color: var(--text-secondary);
+            margin: 15px auto;
+            max-width: 820px;
+            z-index: 2;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 40px #ffd700; }
+            to   { text-shadow: 0 0 110px #ffaa00; }
+        }
+
+        /* BLOQUES PREMIUM CON OVERLAY */
+        .section {
+            padding: 110px 5% 90px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: clamp(2.4rem, 6.5vw, 3.5rem);
+            background: linear-gradient(90deg, var(--accent), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .premium-image-block {
+            position: relative;
+            width: 100%;
+            max-width: 1100px;
+            margin: 60px auto;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .premium-image-block img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .premium-image-block:hover img {
+            transform: scale(1.06);
+        }
+
+        .premium-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(10,10,10,0.95), rgba(10,10,10,0.45), transparent 65%);
+            display: flex;
+            align-items: flex-end;
+            padding: 55px 45px 45px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 2;
+        }
+
+        .premium-image-block:hover .premium-overlay {
+            opacity: 1;
+        }
+
+        .premium-content {
+            max-width: 620px;
+        }
+
+        .premium-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: clamp(1.85rem, 4.5vw, 2.6rem);
+            font-weight: 700;
+            line-height: 1.2;
+            color: #ffffff;
+            margin-bottom: 12px;
+            text-shadow: 
+                0 0 25px #ffd700,
+                0 0 45px #ffd700,
+                3px 3px 12px rgba(0,0,0,0.95);
+        }
+
+        .premium-subtitle {
+            font-size: 1.15rem;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.95);
+            text-shadow: 
+                0 0 15px rgba(255,215,0,0.7),
+                2px 2px 10px rgba(0,0,0,0.9);
+        }
+
+        /* WHATSAPP FLOTANTE */
+        .whatsapp-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .whatsapp-text {
+            background: rgba(10, 10, 10, 0.95);
+            color: #fff;
+            font-size: 13.5px;
+            font-weight: 500;
+            padding: 12px 18px;
+            border-radius: 12px;
+            margin-bottom: 14px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(37, 211, 102, 0.35);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            line-height: 1.45;
+            max-width: 240px;
+        }
+
+        .whatsapp-container:hover .whatsapp-text {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .whatsapp-btn {
+            width: 72px;
+            height: 72px;
+            background: #25D366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 30px #22c55e, 0 10px 35px rgba(37, 211, 102, 0.4);
+            text-decoration: none;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: whatsappPulse 3.5s infinite ease-in-out;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 50px #22c55e, 0 15px 45px rgba(37, 211, 102, 0.6);
+        }
+
+        @keyframes whatsappPulse {
+            0%, 100% { box-shadow: 0 0 30px #22c55e, 0 10px 35px rgba(37, 211, 102, 0.4); }
+            50% { box-shadow: 0 0 45px #22c55e, 0 18px 50px rgba(37, 211, 102, 0.55); }
+        }
+
+        .whatsapp-btn img {
+            width: 42px;
+            filter: drop-shadow(0 0 8px rgba(255,255,255,0.8));
+        }
+
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .premium-overlay { padding: 40px 30px 35px; }
+        }
+
+        @media (max-width: 600px) {
+            .jarvis-icon { width: 220px; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg"></canvas>
+
+    <nav>
+        <a href="index.html" class="nav-logo">AMZHOAR</a>
+        <div class="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="index.html#about">Sobre Mí</a>
+            <a href="index.html#areas">Áreas</a>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Inicio</a>
+        <a href="index.html#about">Sobre Mí</a>
+        <a href="index.html#areas">Áreas</a>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="jarvis-icon">
+            <img src="logon.webp" alt="Servicio Técnico - Amzhoar Creative" loading="eager">
+        </div>
+        <h1 class="title">SERVICIO TÉCNICO</h1>
+        <p class="subtitle">Reparación profesional a domicilio</p>
+        <p class="subtitle">Trabajo rápido, resultados visibles desde el primer día</p>
+    </section>
+
+    <!-- SERVICIOS PREMIUM -->
+    <section class="section">
+        <h2>Servicios Técnicos</h2>
+
+        <!-- Bloque 1 -->
+        <div class="premium-image-block">
+            <img src="publi.webp" alt="Servicio Técnico General" class="tech-image">
+            <div class="premium-overlay">
+                <div class="premium-content">
+                    <div class="premium-title">No es reparación… es rendimiento al máximo.</div>
+                    <div class="premium-subtitle">Tu equipo funcionando como nuevo en horas, no días.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bloque 2 -->
+        <div class="premium-image-block">
+            <img src="optimus.webp" alt="Instalación de Windows" class="tech-image">
+            <div class="premium-overlay">
+                <div class="premium-content">
+                    <div class="premium-title">Sistema limpio. Velocidad real.</div>
+                    <div class="premium-subtitle">Sin errores. Sin basura. Sin pérdida de tiempo.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bloque 3 -->
+        <div class="premium-image-block">
+            <img src="complot.webp" alt="PC Rápida y Optimizada" class="tech-image">
+            <div class="premium-overlay">
+                <div class="premium-content">
+                    <div class="premium-title">Siente la diferencia desde el primer encendido.</div>
+                    <div class="premium-subtitle">Más velocidad. Más control. Menos frustración.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHATSAPP FLOTANTE -->
+    <div class="whatsapp-container">
+        <div class="whatsapp-text" id="whatsappText">
+            El acceso no es público.<br>Solicítalo ahora por WhatsApp
+        </div>
+        
+        <a href="https://wa.me/525557904251?text=Hola%2C%20quiero%20acceder%20a%20tus%20servicios%20y%20contenido%20exclusivo.%20Busco%20algo%20de%20alto%20nivel.%20%C2%BFC%C3%B3mo%20puedo%20comprar%3F" 
+           class="whatsapp-btn" 
+           target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+        </a>
+    </div>
+
+    <script>
+        // CURSOR NEON + TRAIL
+        const cursor = document.createElement('div');
+        const trail = document.createElement('div');
+        cursor.className = 'cursor';
+        trail.className = 'cursor-trail';
+        document.body.appendChild(cursor);
+        document.body.appendChild(trail);
+
+        let mouseX = 0, mouseY = 0, trailX = 0, trailY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+        });
+
+        function animateTrail() {
+            trailX += (mouseX - trailX) * 0.13;
+            trailY += (mouseY - trailY) * 0.13;
+            trail.style.left = trailX + 'px';
+            trail.style.top = trailY + 'px';
+            requestAnimationFrame(animateTrail);
+        }
+        animateTrail();
+
+        // RED INTERCONECTADA
+        const connectionCanvas = document.createElement('canvas');
+        connectionCanvas.style.position = 'fixed';
+        connectionCanvas.style.top = '0';
+        connectionCanvas.style.left = '0';
+        connectionCanvas.style.width = '100%';
+        connectionCanvas.style.height = '100%';
+        connectionCanvas.style.zIndex = '9997';
+        connectionCanvas.style.pointerEvents = 'none';
+        document.body.appendChild(connectionCanvas);
+
+        const ctx = connectionCanvas.getContext('2d');
+
+        function resizeConnectionCanvas() {
+            connectionCanvas.width = window.innerWidth;
+            connectionCanvas.height = window.innerHeight;
+        }
+        resizeConnectionCanvas();
+        window.addEventListener('resize', resizeConnectionCanvas);
+
+        let points = [];
+        for (let i = 0; i < 45; i++) {
+            points.push({
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                speedX: (Math.random() - 0.5) * 0.6,
+                speedY: (Math.random() - 0.5) * 0.6
+            });
+        }
+
+        function drawConnections() {
+            ctx.clearRect(0, 0, connectionCanvas.width, connectionCanvas.height);
+            points.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                if (p.x < 0 || p.x > connectionCanvas.width) p.speedX *= -1;
+                if (p.y < 0 || p.y > connectionCanvas.height) p.speedY *= -1;
+
+                const distToCursor = Math.hypot(p.x - mouseX, p.y - mouseY);
+                if (distToCursor < 280) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(0, 168, 255, ${0.4 - distToCursor / 800})`;
+                    ctx.lineWidth = 1.3;
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(mouseX, mouseY);
+                    ctx.stroke();
+                }
+            });
+            requestAnimationFrame(drawConnections);
+        }
+        drawConnections();
+
+        // PARTÍCULAS (caen + flotantes como puntos)
+        const bgCanvas = document.getElementById("bg");
+        const bgCtx = bgCanvas.getContext("2d");
+
+        function resizeBgCanvas() {
+            bgCanvas.width = window.innerWidth;
+            bgCanvas.height = window.innerHeight;
+        }
+        resizeBgCanvas();
+        window.addEventListener("resize", resizeBgCanvas);
+
+        let fallingParticles = [];
+        for (let i = 0; i < 70; i++) {
+            fallingParticles.push({
+                x: Math.random() * bgCanvas.width,
+                y: Math.random() * bgCanvas.height,
+                size: Math.random() * 2.5 + 0.6,
+                speed: Math.random() * 0.35 + 0.1
+            });
+        }
+
+        let floatingParticles = [];
+        for (let i = 0; i < 50; i++) {
+            floatingParticles.push({
+                x: Math.random() * bgCanvas.width,
+                y: Math.random() * bgCanvas.height,
+                size: Math.random() * 2.2 + 0.8,
+                speedX: (Math.random() - 0.5) * 0.45,
+                speedY: (Math.random() - 0.5) * 0.45,
+                opacity: Math.random() * 0.28 + 0.12
+            });
+        }
+
+        function animateParticles() {
+            bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+            fallingParticles.forEach(p => {
+                bgCtx.fillStyle = "rgba(0, 168, 255, 0.22)";
+                bgCtx.fillRect(p.x, p.y, p.size, p.size);
+                p.y += p.speed;
+                if (p.y > bgCanvas.height) p.y = -10;
+            });
+
+            floatingParticles.forEach(p => {
+                bgCtx.fillStyle = `rgba(255, 215, 0, ${p.opacity})`;
+                bgCtx.fillRect(p.x, p.y, p.size, p.size);
+
+                p.x += p.speedX;
+                p.y += p.speedY;
+
+                if (p.x < 0 || p.x > bgCanvas.width) p.speedX *= -1;
+                if (p.y < 0 || p.y > bgCanvas.height) p.speedY *= -1;
+
+                p.speedX += (Math.random() - 0.5) * 0.018;
+                p.speedY += (Math.random() - 0.5) * 0.018;
+            });
+
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // WHATSAPP TEXTO ROTATIVO
+        const texts = [
+            "El acceso no es público.<br>Solicítalo ahora por WhatsApp",
+            "Respuestas en minutos.",
+            "Diagnóstico inmediato.",
+            "Últimos espacios disponibles."
+        ];
+        let currentIndex = 0;
+        const whatsappText = document.getElementById('whatsappText');
+
+        function changeText() {
+            whatsappText.style.opacity = '0';
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % texts.length;
+                whatsappText.innerHTML = texts[currentIndex];
+                whatsappText.style.opacity = '1';
+            }, 400);
+        }
+
+        setInterval(changeText, 5000);
+
+        // MENÚ MÓVIL
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            const spans = hamburger.querySelectorAll('span');
+            if (mobileMenu.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                const spans = hamburger.querySelectorAll('span');
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

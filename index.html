@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta name="description" content="Amzhoar Creative: diseño, branding, desarrollo web y servicio técnico profesional en México.">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amzhoar Creative</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --accent-cyan: #00A8FF;
+            --accent-purple: #9d4edd;
+            --text: #ffffff;
+            --text-secondary: #b3b3b3;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        #bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -2;
+            background: radial-gradient(circle at 50% 20%, rgba(0, 81, 255, 0.1), transparent 70%);
+        }
+
+        /* CURSOR NEON */
+        .cursor {
+            position: fixed;
+            width: 14px;
+            height: 14px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 20px var(--accent-cyan), 0 0 40px var(--accent-cyan);
+        }
+
+        .cursor-trail {
+            position: fixed;
+            width: 32px;
+            height: 32px;
+            border: 2px solid var(--accent-cyan);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.35;
+            filter: blur(6px);
+        }
+
+        /* ==================== MENÚ RESPONSIVE ==================== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 10, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 81, 255, 0.1);
+        }
+
+        .nav-logo {
+            font-size: 1.65rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-cyan);
+        }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background: var(--accent-cyan);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 8px var(--accent-cyan);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(15px);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .mobile-menu a {
+            font-size: 2rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 20px var(--accent-cyan);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 20px 80px;
+        }
+
+        .logo-hero {
+            width: clamp(180px, 50vw, 475px);
+            margin-bottom: 35px;
+            filter: drop-shadow(0 0 45px var(--accent-cyan));
+        }
+
+        .title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: clamp(3.5rem, 9vw, 6.4rem);
+            font-weight: 700;
+            letter-spacing: 16px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #00A8FF, #c026d3, #00A8FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 50px rgba(0, 240, 255, 0.8);
+            margin-bottom: 20px;
+            animation: glow 3s infinite alternate;
+        }
+
+        .subtitle {
+            font-size: clamp(1.15rem, 4vw, 1.55rem);
+            color: var(--text-secondary);
+            max-width: 780px;
+            margin: 0 auto 55px;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 20px #00A8FF; }
+            to   { text-shadow: 0 0 60px #c026d3; }
+        }
+
+        .btn {
+            padding: 18px 45px;
+            border: 2px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 3px;
+            border-radius: 50px;
+            transition: all 0.4s ease;
+        }
+
+        .btn:hover {
+            background: var(--accent-cyan);
+            color: #000;
+            box-shadow: 0 0 45px var(--accent-cyan);
+        }
+
+        /* Secciones */
+        .section { padding: 130px 5% 100px; }
+
+        h2 {
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            text-align: center;
+            margin-bottom: 80px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .manifesto {
+            max-width: 920px;
+            margin: 0 auto;
+            font-size: 1.42rem;
+            line-height: 2.15;
+            text-align: center;
+        }
+
+        .manifesto p { margin-bottom: 22px; }
+
+        .highlight { color: var(--accent-cyan); font-weight: 700; }
+        .strong { font-weight: 700; color: #fff; }
+        .signature {
+            font-size: 2.1rem;
+            margin-top: 70px;
+            color: var(--accent-purple);
+            letter-spacing: 8px;
+        }
+
+        /* Tres Grandes Áreas */
+        .areas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 40px;
+            max-width: 1350px;
+            margin: 0 auto;
+        }
+
+        .area-card {
+            background: rgba(255,255,255,0.035);
+            border: 1px solid rgba(0, 240, 255, 0.25);
+            border-radius: 28px;
+            padding: 55px 40px;
+            transition: all 0.5s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            color: var(--text);
+        }
+
+        .area-card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-15px);
+            box-shadow: 0 30px 70px rgba(0, 81, 255, 0.1);
+        }
+
+        .area-icon {
+            width: 128px;
+            height: 128px;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .area-icon img {
+            width: 128px;
+            height: 128px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 25px var(--accent-cyan)) 
+                    drop-shadow(0 0 50px var(--accent-cyan)) 
+                    drop-shadow(0 0 80px rgba(0, 81, 255, 0.1));
+            transition: all 0.4s ease;
+        }
+
+        .area-card:hover .area-icon img {
+            transform: scale(1.12) rotate(8deg);
+            filter: drop-shadow(0 0 35px var(--accent-cyan)) 
+                    drop-shadow(0 0 70px var(--accent-cyan)) 
+                    drop-shadow(0 0 110px rgba(0, 81, 255, 0.39));
+        }
+
+        .area-icon::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 170px;
+            height: 170px;
+            border: 2px solid rgba(0, 81, 255, 0.377);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .area-card:hover .area-icon::after {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.18);
+        }
+
+        .area-card h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--accent-cyan);
+            letter-spacing: 2px;
+        }
+
+        .area-card p {
+            color: var(--text-secondary);
+            line-height: 1.75;
+            font-size: 1.08rem;
+        }
+
+        .btn-small {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 32px;
+            border: 1.5px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            border-radius: 30px;
+            font-size: 0.98rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.35s ease;
+            text-decoration: none;
+        }
+
+        .area-card:hover .btn-small {
+            background: var(--accent-cyan);
+            color: #000;
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.7);
+            transform: translateY(-2px);
+        }
+
+        /* PROYECTOS */
+        .projects { padding: 100px 5%; }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+            gap: 25px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .project {
+            position: relative;
+            overflow: hidden;
+            border-radius: 18px;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            height: 370px;
+            cursor: pointer;
+        }
+
+        .project iframe {
+            width: 100%; 
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+            pointer-events: none;
+        }
+
+        .project:hover iframe {
+            transform: scale(1.1);
+        }
+
+        .project-overlay {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%;
+            padding: 30px 25px;
+            background: linear-gradient(to top, rgba(10,10,10,0.95), transparent);
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.4s ease;
+        }
+
+        .project:hover .project-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 30px; right: 30px;
+            background: #25D366;
+            color: white;
+            width: 70px; height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+            box-shadow: 0 0 30px #25D366;
+            z-index: 1000;
+            text-decoration: none;
+        }
+
+        /* ==================== MEDIA QUERIES ==================== */
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg"></canvas>
+
+    <!-- MENÚ -->
+    <nav>
+        <a href="#" class="nav-logo">AMZHOAR</a>
+        
+        <!-- Desktop -->
+        <div class="nav-links">
+            <a href="#hero">Inicio</a>
+            <a href="#about">Sobre Mí</a>
+            <a href="#areas">Áreas</a>
+            <a href="#proyectos">Proyectos</a>
+        </div>
+
+        <!-- Hamburger -->
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#hero">Inicio</a>
+        <a href="#about">Sobre Mí</a>
+        <a href="#areas">Áreas</a>
+        <a href="#proyectos">Proyectos</a>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+        <img src="logte.webp" alt="Amzhoar Creative" class="logo-hero" loading="lazy">
+        <h1 class="title">AMZHOAR</h1>
+        <p class="subtitle">
+            Tecnología + Creatividad = Tu Marca al Siguiente Nivel
+        </p>
+        <a href="#areas" class="btn">EXPLORAR MIS ÁREAS</a>
+    </section>
+
+    <!-- SOBRE MÍ -->
+    <section class="section" id="about">
+        <h2>Sobre Mí</h2>
+        <div class="manifesto">
+            <p>No construyo para ser visto.</p>
+            <p>Construyo para que lo invisible cobre fuerza.</p>
+            <p class="highlight">Observo lo que nadie ve…</p>
+            <p class="highlight">y lo hago imposible de ignorar.</p>
+            <p>La mayoría copia formas.</p>
+            <p>Yo traduzco intenciones.</p>
+            <p>Antes del diseño, existe conciencia.</p>
+            <p>Antes del ruido, existe claridad.</p>
+            <p class="strong">No vengo a seguir tendencias.</p>
+            <p class="strong">Vengo a crear nuevas reglas.</p>
+            <p>Lo que no tiene voz…</p>
+            <p class="highlight">aquí cobra vida.</p>
+            <p class="signature">Amzhoar Creative</p>
+        </div>
+    </section>
+
+    <!-- TRES GRANDES ÁREAS -->
+    <section class="section" id="areas">
+        <h2>Mis Tres Grandes Áreas</h2>
+        <div class="areas-grid">
+            <a href="tecnico.html" class="area-card">
+                <div class="area-icon"><img src="logon.webp" alt="Servicio Técnico"></div>
+                <h3>Servicio Técnico</h3>
+                <p>Reparación y mantenimiento de computadoras a domicilio, formateo, recuperación de datos, armado de PCs e instalación de redes.</p>
+                <span class="btn-small">Ver más →</span>
+            </a>
+
+            <a href="diseno.html" class="area-card">
+                <div class="area-icon"><img src="1776837064993.webp" alt="Diseño & Branding"></div>
+                <h3>Diseño &amp; Branding</h3>
+                <p>Creación de identidad corporativa, diseño de logos, branding completo, diseño gráfico y páginas web.</p>
+                <span class="btn-small">Ver más →</span>
+            </a>
+
+            <a href="contenido.html" class="area-card">
+                <div class="area-icon"><img src="frasco.webp" alt="Contenido Digital"></div>
+                <h3>Contenido Digital</h3>
+                <p>Libros digitales, audiolibros, películas, series, música de todo género y videojuegos para PC y celular.</p>
+                <span class="btn-small">Ver más →</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- PROYECTOS -->
+    <section class="section projects" id="proyectos">
+        <h2>Proyectos</h2>
+        <div class="projects-grid">
+            <div class="project">
+                <iframe 
+                    src="https://www.youtube.com/embed/7XfLA2PWDBI?loop=1&playlist=7XfLA2PWDBI&controls=0&modestbranding=1"
+                    loading="lazy"
+                    frameborder="0"
+                    allow="autoplay; encrypted-media"
+                    allowfullscreen>
+                </iframe>
+                <div class="project-overlay">
+                    <h3>Uso de Inteligencia Artificial</h3>
+                    <p>Creación de videos personalizados</p>
+                </div>
+            </div>
+
+            <div class="project">
+                <iframe 
+                    src="https://www.youtube.com/embed/ew3aLaRJh2Y?loop=1&playlist=ew3aLaRJh2Y&controls=0&modestbranding=1"
+                    loading="lazy"
+                    frameborder="0"
+                    allow="autoplay; encrypted-media"
+                    allowfullscreen>
+                </iframe>
+                <div class="project-overlay">
+                    <h3>Técnica y Soporte</h3>
+                    <p>Sistemas y medios de creación</p>
+                </div>
+            </div>
+
+            <div class="project">
+                <iframe 
+                    src="https://www.youtube.com/embed/s7vpLaUL1tw?loop=1&playlist=s7vpLaUL1tw&controls=0&modestbranding=1"
+                    loading="lazy"
+                    frameborder="0"
+                    allow="autoplay; encrypted-media"
+                    allowfullscreen>
+                </iframe>
+                <div class="project-overlay">
+                    <h3>De ideas a objetos</h3>
+                    <p>Movimiento y energía, tus proyectos cobran vida</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/525557904251" class="whatsapp-btn" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="42" alt="WhatsApp">
+    </a>
+
+    <script>
+        // === CURSOR NEON + TRAIL ===
+        const cursor = document.createElement('div');
+        const trail = document.createElement('div');
+        cursor.className = 'cursor';
+        trail.className = 'cursor-trail';
+        document.body.appendChild(cursor);
+        document.body.appendChild(trail);
+
+        let mouseX = 0, mouseY = 0, trailX = 0, trailY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+        });
+
+        function animateTrail() {
+            trailX += (mouseX - trailX) * 0.13;
+            trailY += (mouseY - trailY) * 0.13;
+            trail.style.left = trailX + 'px';
+            trail.style.top = trailY + 'px';
+            requestAnimationFrame(animateTrail);
+        }
+        animateTrail();
+
+        // === RED INTERCONECTADA ===
+        const connectionCanvas = document.createElement('canvas');
+        connectionCanvas.style.position = 'fixed';
+        connectionCanvas.style.top = '0';
+        connectionCanvas.style.left = '0';
+        connectionCanvas.style.width = '100%';
+        connectionCanvas.style.height = '100%';
+        connectionCanvas.style.zIndex = '9997';
+        connectionCanvas.style.pointerEvents = 'none';
+        document.body.appendChild(connectionCanvas);
+
+        const ctx = connectionCanvas.getContext('2d');
+
+        function resizeConnectionCanvas() {
+            connectionCanvas.width = window.innerWidth;
+            connectionCanvas.height = window.innerHeight;
+        }
+        resizeConnectionCanvas();
+        window.addEventListener('resize', resizeConnectionCanvas);
+
+        let points = [];
+        for (let i = 0; i < 20; i++) {
+            points.push({
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                speedX: (Math.random() - 0.5) * 0.6,
+                speedY: (Math.random() - 0.5) * 0.6
+            });
+        }
+
+        function drawConnections() {
+            ctx.clearRect(0, 0, connectionCanvas.width, connectionCanvas.height);
+
+            points.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+
+                if (p.x < 0 || p.x > connectionCanvas.width) p.speedX *= -1;
+                if (p.y < 0 || p.y > connectionCanvas.height) p.speedY *= -1;
+
+                const distToCursor = Math.hypot(p.x - mouseX, p.y - mouseY);
+                if (distToCursor < 280) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(0, 240, 255, ${0.35 - distToCursor / 800})`;
+                    ctx.lineWidth = 1.2;
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(mouseX, mouseY);
+                    ctx.stroke();
+                }
+            });
+
+            requestAnimationFrame(drawConnections);
+        }
+        drawConnections();
+
+        // === PARTÍCULAS ===
+        const bgCanvas = document.getElementById("bg");
+        const bgCtx = bgCanvas.getContext("2d");
+
+        function resizeBgCanvas() {
+            bgCanvas.width = window.innerWidth;
+            bgCanvas.height = window.innerHeight;
+        }
+        resizeBgCanvas();
+        window.addEventListener("resize", resizeBgCanvas);
+
+        let particles = [];
+        for (let i = 0; i < 40; i++) {
+            particles.push({
+                x: Math.random() * bgCanvas.width,
+                y: Math.random() * bgCanvas.height,
+                size: Math.random() * 2.5 + 0.6,
+                speed: Math.random() * 0.35 + 0.1
+            });
+        }
+
+        function animateParticles() {
+            bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+            particles.forEach(p => {
+                bgCtx.fillStyle = "rgba(0, 240, 255, 0.22)";
+                bgCtx.fillRect(p.x, p.y, p.size, p.size);
+                p.y += p.speed;
+                if (p.y > bgCanvas.height) p.y = -10;
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // === VIDEOS YOUTUBE ===
+        document.querySelectorAll('.project').forEach(project => {
+            const iframe = project.querySelector('iframe');
+            if (iframe) {
+                const baseSrc = iframe.src;
+                const playSrc = baseSrc + '&autoplay=1';
+
+                project.addEventListener('mouseenter', () => {
+                    iframe.src = playSrc;
+                });
+
+                project.addEventListener('mouseleave', () => {
+                    iframe.src = baseSrc;
+                });
+            }
+        });
+
+        // === MENÚ MÓVIL ===
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            
+            const spans = hamburger.querySelectorAll('span');
+            if (mobileMenu.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                const spans = hamburger.querySelectorAll('span');
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
