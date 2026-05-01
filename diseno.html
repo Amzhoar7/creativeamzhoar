@@ -36,7 +36,6 @@
             background: radial-gradient(circle at 50% 20%, rgba(0, 168, 255, 0.15), transparent 70%);
         }
 
-        /* CURSOR NEON - Solo PC y Tablet */
         .cursor {
             position: fixed;
             width: 14px;
@@ -46,6 +45,7 @@
             pointer-events: none;
             z-index: 9999;
             box-shadow: 0 0 20px var(--accent), 0 0 40px var(--accent);
+            transform: translate(-50%, -50%);
         }
 
         .cursor-trail {
@@ -58,9 +58,9 @@
             z-index: 9998;
             opacity: 0.35;
             filter: blur(6px);
+            transform: translate(-50%, -50%);
         }
 
-        /* NAVEGACIÓN */
         nav {
             position: fixed;
             top: 0;
@@ -76,7 +76,6 @@
         }
 
         .nav-logo { font-size: 1.7rem; font-weight: 700; letter-spacing: 4px; color: var(--accent); text-decoration: none; }
-
         .nav-links { display: flex; gap: 40px; }
         .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
         .nav-links a:hover { color: var(--accent); }
@@ -98,7 +97,6 @@
             box-shadow: 0 0 8px var(--accent);
         }
 
-        /* MOBILE MENU */
         .mobile-menu {
             position: fixed;
             top: 0; left: 0;
@@ -115,15 +113,9 @@
             transition: all 0.4s ease;
         }
         .mobile-menu.active { display: flex; opacity: 1; }
-        .mobile-menu a {
-            font-size: 2.1rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
+        .mobile-menu a { font-size: 2.1rem; color: var(--text-secondary); text-decoration: none; transition: all 0.3s ease; }
         .mobile-menu a:hover { color: var(--accent); text-shadow: 0 0 25px var(--accent); }
 
-        /* HERO - IMAGEN CON HOVER CORREGIDO */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -132,15 +124,14 @@
             justify-content: center;
             text-align: center;
             position: relative;
-            padding: 0 5%;
+            padding: 120px 5% 60px;
             overflow: hidden;
         }
 
         .jarvis-icon {
-            width: 420px;
-            max-width: 90vw;
+            width: clamp(240px, 45vw, 420px);
             height: auto;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
             transition: all 0.9s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 2;
             filter: 
@@ -152,11 +143,11 @@
         .jarvis-icon img {
             width: 100%;
             height: auto;
+            max-height: 48vh;
             object-fit: contain;
             display: block;
         }
 
-        /* HOVER - Ahora se ve perfectamente */
         .jarvis-icon:hover {
             transform: scale(1.12) rotate(4deg);
             filter: 
@@ -167,7 +158,7 @@
 
         .title {
             font-family: 'Rajdhani', sans-serif;
-            font-size: clamp(3.5rem, 9vw, 6.5rem);
+            font-size: clamp(3rem, 8vw, 6.5rem);
             font-weight: 700;
             letter-spacing: 14px;
             background: linear-gradient(90deg, #00A8FF, #c026d3, #00A8FF);
@@ -177,8 +168,8 @@
             animation: glow 3s infinite alternate;
         }
 
-        .main-message { font-size: clamp(1.65rem, 5vw, 2.45rem); font-weight: 600; margin: 25px 0 18px; }
-        .subtitle { font-size: clamp(1.2rem, 4vw, 1.55rem); color: var(--text-secondary); max-width: 720px; margin: 0 auto 55px; line-height: 1.6; }
+        .main-message { font-size: clamp(1.5rem, 4vw, 2.45rem); font-weight: 600; margin: 20px 0 15px; }
+        .subtitle { font-size: clamp(1.1rem, 3vw, 1.55rem); color: var(--text-secondary); max-width: 720px; margin: 0 auto 50px; line-height: 1.6; }
 
         .cta-small {
             font-size: 0.95rem;
@@ -203,10 +194,7 @@
             text-decoration: none;
             display: inline-block;
         }
-        .cta-button:hover {
-            transform: scale(1.07) translateY(-4px);
-            box-shadow: 0 0 70px rgba(157, 78, 221, 0.8);
-        }
+        .cta-button:hover { transform: scale(1.07) translateY(-4px); box-shadow: 0 0 70px rgba(157, 78, 221, 0.8); }
 
         @keyframes glow {
             from { text-shadow: 0 0 30px #00A8FF; }
@@ -217,8 +205,13 @@
             50% { opacity: 1; }
         }
 
-        /* SECCIONES (sin cambios) */
-        .section { padding: 140px 5% 120px; max-width: 1250px; margin: 0 auto; text-align: center; }
+        .section {
+            padding: 140px 5% 120px;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
         h2 {
             font-size: clamp(2.6rem, 6vw, 3.8rem);
             background: linear-gradient(90deg, var(--accent), var(--accent-purple));
@@ -226,7 +219,13 @@
             -webkit-text-fill-color: transparent;
             margin-bottom: 80px;
         }
-        .services-grid { display: grid; grid-template-columns: 1fr; gap: 55px; }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
         .service-card {
             background: var(--card-bg);
             border: 1px solid rgba(0, 168, 255, 0.2);
@@ -235,60 +234,78 @@
             transition: all 0.5s ease;
             backdrop-filter: blur(12px);
         }
-        .service-card:hover { transform: translateY(-15px); border-color: rgba(157, 78, 221, 0.5); box-shadow: 0 25px 60px rgba(0, 168, 255, 0.2); }
-        .service-img { width: 100%; height: 280px; object-fit: cover; transition: transform 0.7s ease; }
+        .service-card:hover {
+            transform: translateY(-15px);
+            border-color: rgba(157, 78, 221, 0.5);
+            box-shadow: 0 25px 60px rgba(0, 168, 255, 0.2);
+        }
+        .service-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+        }
         .service-card:hover .service-img { transform: scale(1.06); }
-        .service-content { padding: 40px; }
-        .service-title { font-family: 'Rajdhani', sans-serif; font-size: 1.95rem; font-weight: 700; margin-bottom: 20px; }
-        .service-desc { font-size: 1.12rem; line-height: 1.78; color: var(--text-secondary); }
+        .service-content { padding: 30px; }
 
-        /* WHATSAPP */
-        .whatsapp-container {
-            position: fixed;
-            bottom: 40px;
-            right: 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            z-index: 1000;
-            gap: 12px;
-        }
-        .whatsapp-text {
-            background: rgba(10, 10, 10, 0.95);
-            color: var(--text-secondary);
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-size: 0.97rem;
-            box-shadow: 0 0 25px rgba(0,0,0,0.6);
-            animation: floatText 4s infinite ease-in-out;
-        }
-        .whatsapp-btn {
-            background: #25D366;
-            color: white;
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 38px;
-            box-shadow: 0 0 40px #25D366;
+        .service-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 14px;
             transition: all 0.4s ease;
-            animation: pulse 2.8s infinite;
         }
-        .whatsapp-btn:hover {
-            transform: scale(1.15);
-            box-shadow: 0 0 65px #25D366;
+
+        .service-card:hover .service-title {
+            background: linear-gradient(90deg, #00A8FF, #9d4edd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 8px rgba(0, 168, 255, 0.8)) drop-shadow(0 0 16px rgba(157, 78, 221, 0.6));
         }
+
+        .service-desc {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .whatsapp-container { position: fixed; bottom: 40px; right: 40px; display: flex; flex-direction: column; align-items: flex-end; z-index: 1000; gap: 12px; }
+        .whatsapp-text { background: rgba(10, 10, 10, 0.95); color: var(--text-secondary); padding: 12px 24px; border-radius: 30px; font-size: 0.97rem; box-shadow: 0 0 25px rgba(0,0,0,0.6); animation: floatText 4s infinite ease-in-out; }
+        .whatsapp-btn { background: #25D366; color: white; width: 72px; height: 72px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 38px; box-shadow: 0 0 40px #25D366; transition: all 0.4s ease; animation: pulse 2.8s infinite; }
+        .whatsapp-btn:hover { transform: scale(1.15); box-shadow: 0 0 65px #25D366; }
 
         @keyframes floatText { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
         @keyframes pulse { 0%, 100% { box-shadow: 0 0 35px #25D366; } 50% { box-shadow: 0 0 60px #25D366; } }
 
-        /* RESPONSIVE */
+        /* NUEVO: Ajustes para dispositivos grandes (Pantallas de PC/Laptops) */
+        @media (min-width: 901px) {
+            .section {
+                max-width: 1100px; 
+            }
+            .services-grid {
+                grid-template-columns: 1fr; 
+                justify-items: center; 
+            }
+            .service-card {
+                width: 1000px; 
+                max-width: 100%; 
+            }
+            .service-img {
+                width: 100%; 
+                height: 500px; 
+            }
+        }
+
         @media (max-width: 900px) {
             .nav-links { display: none; }
             .hamburger { display: flex; }
             body { cursor: auto !important; }
+            .services-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            .section { padding: 80px 4% 80px; }
         }
     </style>
 </head>
@@ -304,9 +321,7 @@
             <a href="index.html#areas">Áreas</a>
         </div>
         <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
         </div>
     </nav>
 
@@ -376,100 +391,93 @@
     </div>
 
     <script>
-        // CURSOR NEON + TRAIL (solo PC y Tablet)
+        let mouseX = 0, mouseY = 0;
         if (window.innerWidth > 900) {
             const cursor = document.createElement('div');
             const trail = document.createElement('div');
-            cursor.className = 'cursor';
-            trail.className = 'cursor-trail';
-            document.body.appendChild(cursor);
-            document.body.appendChild(trail);
-
-            let mouseX = 0, mouseY = 0, trailX = 0, trailY = 0;
-
-            document.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-                cursor.style.left = mouseX + 'px';
-                cursor.style.top = mouseY + 'px';
+            cursor.className = 'cursor'; trail.className = 'cursor-trail';
+            document.body.appendChild(cursor); document.body.appendChild(trail);
+            let tX = 0, tY = 0;
+            document.addEventListener('mousemove', e => {
+                mouseX = e.clientX; mouseY = e.clientY;
+                cursor.style.left = mouseX + 'px'; cursor.style.top = mouseY + 'px';
             });
-
-            function animateTrail() {
-                trailX += (mouseX - trailX) * 0.13;
-                trailY += (mouseY - trailY) * 0.13;
-                trail.style.left = trailX + 'px';
-                trail.style.top = trailY + 'px';
-                requestAnimationFrame(animateTrail);
+            function animateCursor() {
+                tX += (mouseX - tX) * 0.12; tY += (mouseY - tY) * 0.12;
+                trail.style.left = tX + 'px'; trail.style.top = tY + 'px';
+                requestAnimationFrame(animateCursor);
             }
-            animateTrail();
+            animateCursor();
         }
 
-        // CANVAS PARTÍCULAS
-        const bgCanvas = document.getElementById("bg");
-        const bgCtx = bgCanvas.getContext("2d");
+        const canvas = document.getElementById("bg");
+        const ctx = canvas.getContext("2d");
+        let pts = [];
+        const mouseNet = { x: null, y: null, r: 180 };
 
-        function resizeCanvas() {
-            bgCanvas.width = window.innerWidth;
-            bgCanvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-        window.addEventListener("resize", resizeCanvas);
-
-        let particles = [];
-        for (let i = 0; i < 80; i++) {
-            particles.push({
-                x: Math.random() * bgCanvas.width,
-                y: Math.random() * bgCanvas.height,
-                size: Math.random() * 2.5 + 0.8,
-                speed: Math.random() * 0.4 + 0.15
+        function initNet() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            pts = [];
+            let count = (canvas.width * canvas.height) / 10000;
+            if (count > 120) count = 120;
+            for(let i=0; i<count; i++) pts.push({
+                x: Math.random()*canvas.width, 
+                y: Math.random()*canvas.height,
+                vx: (Math.random()-0.5)*0.6,
+                vy: (Math.random()-0.5)*0.6,
+                size: Math.random()*2 + 1
             });
         }
 
-        function animateParticles() {
-            bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
-            particles.forEach(p => {
-                bgCtx.fillStyle = "rgba(0, 168, 255, 0.25)";
-                bgCtx.fillRect(p.x, p.y, p.size, p.size);
-                p.y += p.speed;
-                if (p.y > bgCanvas.height) p.y = -10;
-            });
-            requestAnimationFrame(animateParticles);
-        }
-        animateParticles();
+        window.addEventListener('mousemove', e => { mouseNet.x = e.x; mouseNet.y = e.y; });
+        window.addEventListener('resize', initNet);
 
-        // MENÚ HAMBURGUESA
+        function drawNet() {
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            for(let i=0; i<pts.length; i++) {
+                let p = pts[i];
+                p.x += p.vx; p.y += p.vy;
+                if(p.x<0 || p.x>canvas.width) p.vx *= -1;
+                if(p.y<0 || p.y>canvas.height) p.vy *= -1;
+
+                ctx.fillStyle = "rgba(0, 168, 255, 0.4)";
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.fill();
+
+                for(let j=i; j<pts.length; j++) {
+                    let p2 = pts[j];
+                    let d = Math.hypot(p.x-p2.x, p.y-p2.y);
+                    if(d<110) {
+                        ctx.strokeStyle = `rgba(0, 168, 255, ${1-d/110})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+                    }
+                }
+                if(mouseNet.x) {
+                    let dm = Math.hypot(p.x-mouseNet.x, p.y-mouseNet.y);
+                    if(dm < mouseNet.r) {
+                        ctx.strokeStyle = `rgba(157, 78, 221, ${1-dm/mouseNet.r})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouseNet.x, mouseNet.y); ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(drawNet);
+        }
+        initNet(); drawNet();
+
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
-
         hamburger.addEventListener('click', () => {
-            const isActive = mobileMenu.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
             const spans = hamburger.querySelectorAll('span');
-            if (isActive) {
-                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-                spans[1].style.opacity = '0';
-                spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
-            } else {
-                spans[0].style.transform = 'none';
-                spans[1].style.opacity = '1';
-                spans[2].style.transform = 'none';
-            }
+            spans[0].style.transform = mobileMenu.classList.contains('active') ? 'rotate(45deg) translate(5px, 5px)' : 'none';
+            spans[1].style.opacity = mobileMenu.classList.contains('active') ? '0' : '1';
+            spans[2].style.transform = mobileMenu.classList.contains('active') ? 'rotate(-45deg) translate(5px, -5px)' : 'none';
         });
 
-        document.querySelectorAll('.mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.remove('active');
-                const spans = hamburger.querySelectorAll('span');
-                spans[0].style.transform = 'none';
-                spans[1].style.opacity = '1';
-                spans[2].style.transform = 'none';
-            });
-        });
-        document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-});
-document.querySelectorAll('img').forEach(img => {
-    img.setAttribute('draggable', 'false');
-});
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.querySelectorAll('img').forEach(img => img.setAttribute('draggable', 'false'));
     </script>
 </body>
 </html>
